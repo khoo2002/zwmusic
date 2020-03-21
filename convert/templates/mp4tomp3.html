@@ -1,0 +1,38 @@
+{% block content %}
+
+
+<body style="background-color:lightskyblue" onload="clear()">
+    <div><h2 style="color:mediumpurple;">ZWQQ Converter MP4 to MP3</h2><nav style="background-color:greenyellow"><a href="index" style="margin-left:10px;">|首页|</a><a href="converter" style="margin-left:10px;">|YT歌曲copy&dl下载|</a></nav></div>
+    <div class="row">
+        <div class="col-md-8" style="float:left;width:45%">
+            <form method="post" class="form-horizontal" action="readydl">
+                <div class="form-group">
+                    {% csrf_token %}
+                    <label for="id_username" class="col-md-2 control-label">File(*Only .mp4)</label>
+                    <div class="col-md-10" style="margin-top:20px">
+                        {{ form.c_url }}
+                    </div>
+                </div>
+                <input type="submit" value="submit" class="btn btn-default" style="margin-top:20px" />
+            </form>
+        </div>
+        <div style="float:right;width:45%">
+            <label for="preview" id="preview1" hidden>Preview</label>
+            <div style="margin-top:20px;margin-bottom:20px">
+                <embed src="{{clurl}}" id="embed1" hidden />
+            </div>
+            <a href="{{ clurl }}" id="href1" style="font-size:medium;margin-top:20px" hidden>点击下载文件：{{ content }}</a>
+        </div>
+    </div>
+    <div style="height:20px;position:fixed;bottom:0px;">
+        <footer style="color:rebeccapurple;font-style:italic;">@by:ZWQQ</footer>
+    </div>
+</body>
+<script type="text/javascript">
+        function clear() {
+            document.getElementById('preview1').removeAttribute('hidden');
+            document.getElementById('href1').removeAttribute('hidden');
+            document.getElementById('embed1').removeAttribute('hidden');
+        }
+</script>
+{% endblock %}
