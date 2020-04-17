@@ -53,6 +53,10 @@ def readydl(request):
     result = ydl.extract_info(url, download=True) 
     id = result['id']
     title = result['title']
+    symbol = []
+    import re
+    if re.findall(r'[,|.|《|》|||“|”|。|，|?|？|-|—|_|+|&|&|￥|$|!|！|~|·|`|~]',title):
+        title=re.sub(r'[,|.|《|》|||“|”|。|，|?|？|-|—|_|+|&|&|￥|$|!|！|~|·|`|~]',r'',title)
     import subprocess
     cmd = ['ffmpeg','-i', 'download/'+id+'.mp4','-vn','-f','mp3', 'download/'+id+'.mp3']
     out = subprocess.run(cmd)
