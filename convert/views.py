@@ -129,7 +129,7 @@ def dlqrcode(request):
     img.save('zwqrcode.png')
     filename = 'zwqrcode.png'
     dl_filename = 'zwqrcode.png'
-    f = open(dl_filename,'r')
+    f = open(dl_filename,'rb')
     response = HttpResponse(f.read())
     response['Content-Deposition'] = 'attachment; filename="zwqrcode.png"'
     response['content_type'] = 'image/png'
