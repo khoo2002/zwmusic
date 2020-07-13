@@ -126,7 +126,7 @@ def dlqrcode(request):
     qr.add_data(content)
     qr.make(fit=True)
     img = qr.make_image(fill_color="black", back_color="white")
-    img.save('zwqrcode.png')
+    img.save('download/zwqrcode.png')
     filename = 'zwqrcode.png'
     dl_filename = 'download/'+filename
     return render(request,'qrcode.html',{'dlurl':dl_filename,'context':filename,'dl_context':dl_filename}) 
