@@ -114,7 +114,7 @@ def qrcode(request):
          }
         )
 
-def dlqrcode(request,qrcode):
+def dlqrcode(request):
     content = request.POST['t_url']
     import qrcode
     qr = qrcode.QRCode(
