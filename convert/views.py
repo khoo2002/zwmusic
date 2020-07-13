@@ -115,18 +115,11 @@ def qrcode(request):
         )
 
 def dlqrcode(request):
+    import pyqrcode
+    import sys
     content = request.POST['t_url']
-    import qrcode
-    qr = qrcode.QRCode(
-        version=1,
-        error_correction=qrcode.constants.ERROR_CORRECT_L,
-        box_size=10,
-        border=4,
-    )
-    qr.add_data(content)
-    qr.make(fit=True)
-    img = qr.make_image(fill_color="black", back_color="white")
-    img.save('zwqrcode.png')
+    number = pyqrcode.create(content)
+    number.png('zwqrcode.png')
     filename = 'zwqrcode.png'
     dl_filename = 'zwqrcode.png'
     return render(request,'qrcode.html',{'dlurl':dl_filename,'context':dl_filename}) 
