@@ -102,7 +102,34 @@ def picture(imgnfile):
     response['content_type'] = 'image/jpg'
     return response
 
+def qrcode(request):
+    return render(
+        request,
+        'converter.html',
+        {
+            'title':'ZWQQ_MUSIC_CONVERTER',
+            'form': forms.ZWForm, 
+            'message':'this is a form',
+            
+         }
+        )
 
+def dlqrcode(request,qrcode):
+    content = request.POST['t_url']
+    import qrcode
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=10,
+        border=4,
+    )
+    qr.add_data(content)
+    qr.make(fit=True)
+    img = qr.make_image(fill_color="black", back_color="white")
+    img.save('zwqrcode.png')
+    filename = 'zwqrcode.png'
+    dl_filename = 'download/'+filename
+    return render(request,'qrcode.html',{'dlurl':dl_filename,'context':filename,'dl_context':dl_filename}) 
 
 #function for calling the ffmpeg buildpack
 #def test(request):

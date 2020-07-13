@@ -1,0 +1,44 @@
+﻿{% block content %}
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/pro.css">
+    <title>ZW-QRCODE</title>
+</head>
+
+<body style="background-color:cornflowerblue" onload="clear()">
+    <div class="w3-container w3-card"><h2 style="color:rebeccapurple;"><b>ZW-QRCODE</b></h2></div>
+    <div class="row w3-container">
+        <div class="w3-container" style="width:100%">
+            <form method="post" class="form-horizontal" style="margin-top:90px" action="dlqrcode">
+                <div class="form-group">
+                    {% csrf_token %}
+                    <label for="id_username" class="col-md-2 control-label"><b>Content/内容：</b></label>
+                    <div class="col-md-10" style="margin-top:20px">
+                        {{ form.t_url }}
+                    </div>
+                </div>
+                <input type="submit" value="submit" class="btn btn-default w3-button w3-blue" style="margin-top:20px" />
+            </form>
+        </div>
+        <div style="width:100%;margin-top:90px;margin-bottom:20px;" class="w3-container">
+            <label for="preview" id="preview1" hidden><b>预览 ：</b></label>
+            <div style="margin-top:20px;margin-bottom:20px">
+                <embed src="{{dlurl}}" id="embed1" hidden />
+            </div>
+            <a href="{{ dlurl }}" id="href1" class="w3-button w3-blue" style="font-size:medium;margin-top:20px" download="{{ dl_context }}" hidden>点击下载文件：{{ context }}</a>
+        </div>
+    </div>
+    <div style="height:20px;position:fixed;bottom:0px;">
+        <footer style="color:rebeccapurple;font-style:italic;">@by:ZW</footer>
+    </div>
+</body>
+<script type="text/javascript">
+        function clear() {
+            document.getElementById('preview1').removeAttribute('hidden');
+            document.getElementById('href1').removeAttribute('hidden');
+            document.getElementById('embed1').removeAttribute('hidden');
+        }
+</script>
+{% endblock %}
