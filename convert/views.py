@@ -129,6 +129,9 @@ def dlqrcode(request):
     img.save('download/zwqrcode.png')
     filename = 'zwqrcode.png'
     dl_filename = 'download/zwqrcode.png'
+    import subprocess
+    cmd = ['qr',content,'>','download/zwqrcode.png']
+    subprocess.run(cmd)
     f = open(dl_filename,'r')
     response = HttpResponse(f.read(),'utf-8')
     response['Content-Deposition'] = 'attachment; filename="download/zwqrcode.png"'
