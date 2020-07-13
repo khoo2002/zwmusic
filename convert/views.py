@@ -119,8 +119,8 @@ def dlqrcode(request):
     import sys
     content = request.POST['t_url']
     number = pyqrcode.create(content)
-    number.png('download/zwqrcode.jpg')
-    filename = 'download/zwqrcode.jpg'
+    number.png('zwqrcode.jpg')
+    filename = 'zwqrcode.jpg'
     dl_filename = 'index/zwqrcode.jpg'
     z = open(filename,"r")
     response = HttpResponse(z.read())
