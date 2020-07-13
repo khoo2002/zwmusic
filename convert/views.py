@@ -105,7 +105,7 @@ def picture(imgnfile):
 def qrcode(request):
     return render(
         request,
-        'converter.html',
+        'qrcode.html',
         {
             'title':'ZWQQ_MUSIC_CONVERTER',
             'form': forms.ZWForm, 
