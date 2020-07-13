@@ -119,10 +119,14 @@ def dlqrcode(request):
     import sys
     content = request.POST['t_url']
     number = pyqrcode.create(content)
-    number.png('zwqrcode.jpg')
-    filename = 'zwqrcode.jpg'
+    number.png('download/zwqrcode.jpg')
+    filename = 'download/zwqrcode.jpg'
     dl_filename = 'index/zwqrcode.jpg'
-    return render(request,'qrcode.html',{'dlurl':dl_filename,'context':dl_filename}) 
+    z = open(filename,"r")
+    response = HttpResponse(z.read())
+    response['Content-Deposition'] = 'attachment; filename="'+filename+'"'
+    response['content_type'] = 'image/png'
+    return response
 
 #function for calling the ffmpeg buildpack
 #def test(request):
