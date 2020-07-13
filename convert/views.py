@@ -129,7 +129,7 @@ def dlqrcode(request):
     img.save('zwqrcode.png')
     filename = 'zwqrcode.png'
     dl_filename = 'zwqrcode.png'
-    return render(request,'converter.html',{'dlurl':dl_filename,'context':dl_filename}) 
+    return render(request,'qrcode.html',{'dlurl':dl_filename,'context':dl_filename}) 
 
 #function for calling the ffmpeg buildpack
 #def test(request):
