@@ -126,15 +126,12 @@ def dlqrcode(request):
     qr.add_data(content)
     qr.make(fit=True)
     img = qr.make_image(fill_color="black", back_color="white")
-    img.save('download/zwqrcode.png')
+    img.save('zwqrcode.png')
     filename = 'zwqrcode.png'
-    dl_filename = 'download/zwqrcode.png'
-    import subprocess
-    cmd = ['qr',content,'>','download/zwqrcode.png']
-    subprocess.run(cmd)
+    dl_filename = 'zwqrcode.png'
     f = open(dl_filename,'r')
     response = HttpResponse(f.read(),'utf-8')
-    response['Content-Deposition'] = 'attachment; filename="download/zwqrcode.png"'
+    response['Content-Deposition'] = 'attachment; filename="zwqrcode.png"'
     response['content_type'] = 'image/png'
     return response
 
