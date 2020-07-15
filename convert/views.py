@@ -131,7 +131,7 @@ def stream_http(request,filename):
     import os
     from django.http import HttpResponse,Http404,FileResponse
     try:
-        response = FileResponse(open("download/"+filename,'rb'))
+        response = FileResponse(open(filename,'rb'))
         response['content_type'] = "application/octet-stream"
         response['Content-Disposition'] = "attachment; filename="+filename
         return response
