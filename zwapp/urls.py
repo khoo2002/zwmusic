@@ -28,5 +28,5 @@ urlpatterns = [
     path('index/<imgnfile>',views.picture),
     path('qrcode',views.qrcode),
     path('dlqrcode',views.dlqrcode),
-    path('index/download/<filename>',views.stream_http)
+    path('download/<filename>',views.stream_http)
     ]
