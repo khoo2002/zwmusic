@@ -66,7 +66,6 @@ def readydl(request):
     filename = title+'.mp3'
     return render(request,'converter.html',{'dlurl':furl[0],'context':fid[0]+'.mp3'}) 
 
-
     
 
 def download(request,dlfile,file):
@@ -128,6 +127,16 @@ def dlqrcode(request):
     response['content_type'] = 'image/png'
     return response
 
+def stream_http(request,filename):
+    import os
+    from django.http import HttpResponse,Http404,FileResponse
+    try:
+        response = FileResponse(open("download/"+filename,'rb'))
+        response['content_type'] = "application/octet-stream"
+        response['Content-Disposition'] = "attachment; filename="+filename
+        return response
+    except Exception:
+        raise Http404
 #function for calling the ffmpeg buildpack
 #def test(request):
 #    import subprocess
