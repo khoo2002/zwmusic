@@ -1,4 +1,6 @@
 {
   "SuppressEnvironmentCreationPrompt": true,
-  "SuppressConfigureTestFrameworkPrompt": "true"
+  "SuppressConfigureTestFrameworkPrompt": "true",
+  "Interpreter": "CondaEnv|CondaEnv|env",
+  "SuppressPackageInstallationPrompt": true
 }
