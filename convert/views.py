@@ -60,10 +60,10 @@ def readydl(request):
     import subprocess
     cmd = ['ffmpeg','-i', 'download/'+id+'.mp4','-vn','-f','mp3', 'download/'+id+'.mp3']
     out = subprocess.run(cmd)
-    surl= 'readydl/'+id +'.mp3/'+title+'.mp3'
+    surl= 'readydl/'+id +'.mp3/'+title+'_zwmusic.mp3'
     furl.append(surl)
     fid.append(title)
-    filename = title+'.mp3'
+    filename = title+'_zwmusic.mp3'
     return render(request,'converter.html',{'dlurl':furl[0],'context':fid[0]}) 
 
     
