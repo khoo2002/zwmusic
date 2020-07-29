@@ -64,7 +64,7 @@ def readydl(request):
     furl.append(surl)
     fid.append(title)
     filename = title+'.mp3'
-    return render(request,'converter.html',{'dlurl':furl[0],'context':fid[0]+'.mp3'}) 
+    return render(request,'converter.html',{'dlurl':furl[0],'context':fid[0]+'_zwmusic.mp3'}) 
 
     
 
