@@ -18,7 +18,7 @@
                 alert("请输入密码");
             } else if(username.value == "khoozw" && pass.value == "11223344"){
                 var mystep1 = document.getElementById("content").removeAttribute('hidden');
-                var mystep2 = document.getElementById("login_frame").setAttribute('hidden');
+                var mystep2 = document.getElementById("login_frame").setAttribute('hidden',1);
             } else {
                 alert("请输入正确的用户名和密码！");
             }
@@ -34,7 +34,7 @@
                   </div>
               </form>
          </div>
-    <div id="content" height="100%" width="100%" hidden="">
+    <div id="content" height="100%" width="100%" hidden>
         <div class="w3-container w3-card"><h2 style="color:rebeccapurple;"><b>ZW-MUSIC | YT歌曲copy&dl下载</b></h2></div>
         <div class="w3-container"><nav style="background-color:dodgerblue"><a href="index" style="margin-left:10px;" class="w3-button">首页</a><a href="converter" style="margin-left:10px;" class="w3-button">YT歌曲copy&dl下载</a></nav></div>
         <div class="row w3-container">
@@ -58,9 +58,10 @@
                 <a href="{{ dlurl }}" id="href1" class="w3-button w3-blue" style="font-size:medium;margin-top:20px" download="{{context}}_zwmusic.mp3" hidden>点击下载文件：{{ context }}_zwmusic.mp3</a>
             </div>
         </div>
+        
+        </div>
         <div style="height:20px;position:fixed;bottom:0px;">
             <footer style="color:rebeccapurple;font-style:italic;">@by:ZW</footer>
-        </div>
         </div>
     </body>
     <script type="text/javascript">
