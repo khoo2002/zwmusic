@@ -71,4 +71,4 @@ whitenoise==4.1.2
 win-inet-pton==1.1.0
 wincertstore==0.2
 you-get==0.4.1314
-youtube-dl>=2020.9.20
+youtube-dl >= 2020.9.20
