@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/pro.css">
 <title>ZW-MUSIC 首页</title>
 </head>
-<body style="background-color:cornflowerblue" id="zw" display="none">
+<body style="background-color:cornflowerblue" id="zw" visibility="hidden">
     <div class="w3-container w3-card"><h2 style="color:rebeccapurple;"><b>ZW-MUSIC 首页</b></h2></div>
     <div class="w3-container"><nav style="background-color:dodgerblue"><a href="index" style="margin-left:10px;" class="w3-button">首页</a><a href="converter" style="margin-left:10px;" class="w3-button">YT歌曲copy&dl下载</a></nav></div>
     <div class="w3-container" style="margin-top:90px">
@@ -43,14 +43,20 @@
             </div>
         </div>
     </div>
-    <DOCTYPE html>      
+    <div style="height:20px;position:fixed;bottom:0px;">
+        <footer style="color:rebeccapurple;font-style:italic;">@by:ZW</footer>
+    </div>
+</body>
+</html>
+
+<DOCTYPE html>      
 <meta charset="utf-8">
  <html>
      <head>
        <meta charset="utf-8">
          <title>登陆界面</title>
          <link rel="stylesheet" type="text/css" href="login.css"/>
-         <script type="text/javascript" src="login.js">
+         <script type="text/javascript">
          function login() {
             var username = document.getElementById("username");//定义用户名
             var pass = document.getElementById("password");//定义密码
@@ -59,7 +65,7 @@
             } else if (pass.value  ==="") {
                 alert("请输入密码");
             } else if(username.value == "khoozw" && pass.value == "11223344"){
-                document.getElementById("zw").style.display = "block";
+                document.getElementById("zw").style.visibility = "visible";
             } else {
                 alert("请输入正确的用户名和密码！");
             }
@@ -68,7 +74,7 @@
        </head>
      <body>
           <div id="login_frame" background-colour:#FAEBD7>
-              <form method="post" action="login.js">
+              <form method="post" >
                   <p><label class="label_input">用户名</label><input type="text" id="username" class="text_field"/></p>
                   <p><label class="label_input">密码</label><input type="text" id="password" class="text_field"/></p>
                   <div id="login_control">
@@ -79,9 +85,3 @@
          </div>
      </body>
     </html>
-    <div style="height:20px;position:fixed;bottom:0px;">
-        <footer style="color:rebeccapurple;font-style:italic;">@by:ZW</footer>
-    </div>
-</body>
-</html>
-
