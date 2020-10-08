@@ -8,6 +8,33 @@
     </head>
 
     <body style="background-color:cornflowerblue" onload="clear()">
+            <script type="text/javascript">
+         function login() {
+             var username = document.getElementById("username");
+             var pass = document.getElementById("password");
+             if (username.value ==="") {
+                alert("请输入用户名");
+            } else if (pass.value  ==="") {
+                alert("请输入密码");
+            } else if(username.value == "khoozw" && pass.value == "11223344"){
+                var mystep1 = document.getElementById("content").removeAttribute('hidden');
+                var mystep2 = document.getElementById("login_frame").setAttribute('hidden');
+            } else {
+                alert("请输入正确的用户名和密码！");
+            }
+        }
+         </script>
+          <div id="login_frame">
+              <h1>没有的在广东漂泊了！</h1>
+              <form>
+                  <p><label class="label_input">用户名</label><input type="text" id="username" class="text_field"></p>
+                  <p><label class="label_input">密码</label><input type="text" id="password" class="text_field"></p>
+                  <div id="login_control">
+                      <input type="button" id="btn_login" value="登陆" onclick="login()">
+                  </div>
+              </form>
+         </div>
+    <div id="content" height="100%" width="100%" hidden="">
         <div class="w3-container w3-card"><h2 style="color:rebeccapurple;"><b>ZW-MUSIC | YT歌曲copy&dl下载</b></h2></div>
         <div class="w3-container"><nav style="background-color:dodgerblue"><a href="index" style="margin-left:10px;" class="w3-button">首页</a><a href="converter" style="margin-left:10px;" class="w3-button">YT歌曲copy&dl下载</a></nav></div>
         <div class="row w3-container">
@@ -33,6 +60,7 @@
         </div>
         <div style="height:20px;position:fixed;bottom:0px;">
             <footer style="color:rebeccapurple;font-style:italic;">@by:ZW</footer>
+        </div>
         </div>
     </body>
     <script type="text/javascript">
