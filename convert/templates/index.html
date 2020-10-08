@@ -1,54 +1,13 @@
 <!DOCTYPE html>
-<html>
-<head>
+<html><head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/pro.css">
 <title>ZW-MUSIC 首页</title>
+
 </head>
 <body style="background-color:cornflowerblue">
-    <div id="content" height="100%" width="100%" hidden>
-    <div class="w3-container w3-card"><h2 style="color:rebeccapurple;"><b>ZW-MUSIC 首页</b></h2></div>
-    <div class="w3-container"><nav style="background-color:dodgerblue"><a href="index" style="margin-left:10px;" class="w3-button">首页</a><a href="converter" style="margin-left:10px;" class="w3-button">YT歌曲copy&dl下载</a></nav></div>
-    <div class="w3-container" style="margin-top:90px">
-
-        <hr>
-        <div class="w3-cell-row">
-            <div class="w3-cell w3-container">
-                <h3><b>步骤一 :</b></h3>
-                <h3>找一首歌曲在You-tube & 复制分享链接</h3>
-                <p>[想见你],[https://youtu.be/yoiCSrxvwjI]</p>
-            </div>
-        </div>
-        <hr>
-        <div class="w3-cell-row">
-            <div class="w3-cell w3-container">
-                <h3><b>步骤二 :</b></h3>
-                <h3>粘贴 & 稍等</h3>
-                <p>粘贴在空白栏中。稍等片刻。</p>
-            </div>
-        </div>
-        <hr>
-        <div class="w3-cell-row">
-            <div class="w3-cell w3-container">
-                <h3><b>步骤三 :</b></h3>
-                <h3>点击链接 & 开始下载</h3>
-                <p>开始下载了。</p>
-            </div>
-        </div>
-        <hr>
-        <div class="w3-cell-row">
-            <div class="w3-cell w3-container">
-                <h3><a href="https://bitbucket.org/khoo2002/zwmusicapk/downloads/ZWMUSIC.apk" download="zwmusic.apk"><b>下载我们的app</b></a></h3>
-                <h5>累计下载：<b>220+</b>次</h5>
-            </div>
-        </div>
-    </div>   
-    <div style="height:20px;position:fixed;bottom:0px;">
-        <footer style="color:rebeccapurple;font-style:italic;">@by:ZW</footer>
-    </div>
-    </div>
-      <script type="text/javascript">
+    <script type="text/javascript">
          function login() {
              var username = document.getElementById("username");
              var pass = document.getElementById("password");
@@ -57,21 +16,64 @@
             } else if (pass.value  ==="") {
                 alert("请输入密码");
             } else if(username.value == "khoozw" && pass.value == "11223344"){
-                document.getElementById("content").style.hidden = "";
+                var mystep1 = document.getElementById("content").removeAttribute('hidden');
+                var mystep2 = document.getElementById("login_frame").setAttribute('hidden');
             } else {
                 alert("请输入正确的用户名和密码！");
             }
         }
          </script>
-          <div id="login_frame" background-colour:#FAEBD7>
+          <div id="login_frame">
               <h1>没有的在广东漂泊了！</h1>
               <form>
-                  <p><label class="label_input">用户名</label><input type="text" id="username" class="text_field"/></p>
-                  <p><label class="label_input">密码</label><input type="text" id="password" class="text_field"/></p>
+                  <p><label class="label_input">用户名</label><input type="text" id="username" class="text_field"></p>
+                  <p><label class="label_input">密码</label><input type="text" id="password" class="text_field"></p>
                   <div id="login_control">
-                      <input type="button" id="btn_login" value="登陆" onclick="login()"/>
+                      <input type="button" id="btn_login" value="登陆" onclick="login()">
                   </div>
               </form>
          </div>
-</body>
-</html>
+    <div id="content" height="100%" width="100%" hidden="">
+    <div class="w3-container w3-card"><h2 style="color:rebeccapurple;"><b>ZW-MUSIC 首页</b></h2></div>
+    <div class="w3-container"><nav style="background-color:dodgerblue"><a href="index" style="margin-left:10px;" class="w3-button md-opjjpmhoiojifppkkcdabiobhakljdgm_doc">首页</a><a href="converter" style="margin-left:10px;" class="w3-button md-opjjpmhoiojifppkkcdabiobhakljdgm_doc">YT歌曲copy&amp;dl下载</a></nav></div>
+    <div class="w3-container" style="margin-top:90px">
+
+        <hr>
+        <div class="w3-cell-row">
+            <div class="w3-cell w3-container">
+                <h3><b>步骤一 :</b></h3>
+                <h3>找一首歌曲在You-tube &amp; 复制分享链接</h3>
+                <p>[想见你],[https://youtu.be/yoiCSrxvwjI]</p>
+            </div>
+        </div>
+        <hr>
+        <div class="w3-cell-row">
+            <div class="w3-cell w3-container">
+                <h3><b>步骤二 :</b></h3>
+                <h3>粘贴 &amp; 稍等</h3>
+                <p>粘贴在空白栏中。稍等片刻。</p>
+            </div>
+        </div>
+        <hr>
+        <div class="w3-cell-row">
+            <div class="w3-cell w3-container">
+                <h3><b>步骤三 :</b></h3>
+                <h3>点击链接 &amp; 开始下载</h3>
+                <p>开始下载了。</p>
+            </div>
+        </div>
+        <hr>
+        <div class="w3-cell-row">
+            <div class="w3-cell w3-container">
+                <h3><a href="https://bitbucket.org/khoo2002/zwmusicapk/downloads/ZWMUSIC.apk" download="zwmusic.apk" class="md-opjjpmhoiojifppkkcdabiobhakljdgm_doc"><b>下载我们的app</b></a></h3>
+                <h5>累计下载：<b>220+</b>次</h5>
+            </div>
+        </div>
+    </div>   
+    <div style="height:20px;position:fixed;bottom:0px;">
+        <footer style="color:rebeccapurple;font-style:italic;">@by:ZW</footer>
+    </div>
+    </div>
+
+
+</body></html>
