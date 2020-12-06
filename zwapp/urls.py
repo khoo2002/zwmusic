@@ -26,7 +26,7 @@ urlpatterns = [
     path('mp4tomp3/<dlfile>/<file>', views.download),
     path('index/<dlfile>/<file>',views.download),
     path('index/<imgnfile>',views.picture),
-    path('qrcode',views.qrcode),
+    path('invest',views.invest),
     path('dlqrcode',views.dlqrcode),
     path('<filename>',views.stream_http)
     ]
