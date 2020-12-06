@@ -1,0 +1,727 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <title>股票算法-kzw</title>
+    <style>
+      @media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  body{
+    width: 1200px;
+  }
+  #model_ca{
+      width:1200px;
+  }
+}
+#Calculator {
+  position: fixed;
+  right: 0;
+  top: 80%;
+  width: 8em;
+  margin-top: -3.5em;
+}
+
+	.negative { color : red; }
+	.positive { color : green; }
+
+    </style>
+    <script>
+$(document).ready(function(){
+  $('[data-toggle="popover"]').popover();   
+});
+</script>
+  </head>  <body>
+  <div class="container-fluid">
+     <div class="row bg-light">
+    <div class="col-8">
+    <nav class="navbar navbar-expand bg-light ">
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" href="#">Home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="invest">Dictionary</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">CALC&NOTE</a>
+    </li>
+  </ul>
+</nav>
+  <div class="container-fluid" >
+    <div >
+      <div>
+      
+        <!-- Modal Header -->    <div class="jumbotron jumbotron-fluid">
+    <div class="container-fluid">
+
+              <h1 class="title">分析器</h1>
+    </div>
+    </div>
+        
+        <!-- Modal body -->
+        <div class="container">
+        <h2><input type="text" placeholder="公司名字"></h2>
+        <div class=" mt-3">
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" href="#home">估值计算</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#menu1">财务报表</a>
+    </li>
+        <li class="nav-item">
+      <a class="nav-link" href="#menu2">公司衡量</a>
+    </li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div id="home" class=" tab-pane active"><br>
+    <div>
+    <h3>估值计算</h3>
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" data-toggle="tab" href="#RPE">RPE</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#DY">DY</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#PEG">PEG</a>
+    </li>
+        <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#CAGR">CAGR</a>
+    </li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div id="RPE" class="tab-pane active"><br>
+    <!--RPE-->
+      <h3><a href="#" class="list-group-item list-group-item-action" data-toggle="collapse" data-target="#mean_RPE" >RPE</a></h3>
+        <div id="mean_RPE" class="collapse">
+            <p><strong>意思：</strong><br>RPE就是将当前市盈率与公司过去的市盈率或基准的当前市盈率进行比较的量度。</p>
+            <p><strong>实列：</strong><br>假设公司在过去10年的市盈率介于15到40之间。如果当前（绝对）市盈率是25，则相对市盈率将当前市盈率与该过去范围的最高值进行比较 为0.625（25/40），相对于范围下限的当前P / E为1.67（25/15）。这些价值告诉投资者，该公司的市盈率目前为10年高点的62.5％，比10年低点高67％。</p>
+            <p><strong>注意：</strong><br>1. P/E估值法比较适用于拥有稳定收入和盈利的公司<br>2. 参考和比较相同行业P/E值</p>
+            <hr>
+            <div id="Rpeslide" class="carousel slide" data-ride="carousel">
+
+
+  
+  <!-- The slideshow -->
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="https://i.imgur.com/ozP0yqX.jpeg" alt="Caution1" width="700" height="500">
+      <hr>
+      <p>
+【使用P/E要注意的事项】
+<br><br>
+<strong>1. P/E估值法比较适用于拥有稳定收入和盈利的公司</strong>
+<br>
+当你了解了股价代表情绪，盈利代表价值，应该明白P/E的重点在每股盈利。如果公司在亏损状态，没有盈利，就代表股东不可能获得回本，这类型的公司就不能使用P/E估值法。
+<br>
+另外，如果公司亏损或盈利的落差起伏很大，每股盈利的数字太小，P/E值也失去了参考价值。比如EPS是0.02，股价RM10，P/E是500倍，相当于500年才回本，谁还会有兴趣投资这家公司呢？这个P/E值已经失去了意义。
+<br>
+<br>
+<strong>2. 参考和比较P/E值</strong>
+<br>
+如果一家公司的<strong>成长能力很差，本益比小于5，不代表股价就便宜</strong>；若成长能力强，本益比<strong>即使大于20，也可能是让你捡到便宜潜力股的机会</strong>。一般说来，<strong>高成长与稳定的公司</strong>都会有着<strong>较高的本益比</strong>。
+<br>
+<br>
+因此，当一家公司符合选股标准后，用P/E估值法的时候，可以查看公司过去5到10年的历史P/E值，取平均值来计算合理的内在价值。或者是和同行同业的对手做比较，才能了解同一个营业属性的P/E值大概在什么范围。</p>
+    </div>
+    <div class="carousel-item">
+      <img src="https://i.imgur.com/OlsXwjw.jpeg" alt="Caution2" width="700" height="500">
+    </div>
+    <div class="carousel-item">
+      <img src="https://i.imgur.com/DVYMO8i.jpeg" alt="New York" width="700" height="500">
+    </div>
+    <div class="carousel-item">
+      <img src="https://i.imgur.com/emPrNjo.jpg" alt="New York" width="700" height="500">
+    </div>
+    <div class="carousel-item">
+      <img src="https://i.imgur.com/viNtZlR.jpg" alt="New York" width="700" height="500">
+    </div>
+    <div class="carousel-item">
+      <img src="https://i.imgur.com/n0M58qP.jpg" alt="New York" width="700" height="500">
+    </div>
+  </div>
+  
+  <!-- Left and right controls -->
+  <a class="carousel-control-prev" href="#Rpeslide" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#Rpeslide" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
+</div>
+
+  </div>
+      <table class="table table-sm">
+    <thead class="bg-success">
+      <tr>
+        <th colspan="2" class="text-center">Relative PE</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a data-toggle="popover" title="Highest PE" data-content="In Valuation Ratio:Price/Earnings(Adj.)">Highest PE</a></td>
+        <td class="text-center"><input type="number" id="rpe_highest_pe" onchange="countvRpe()"></td>
+      </tr>
+      <tr>
+        <td><a data-toggle="popover" title="Lowest PE" data-content="In Valuation Ratio:Price/Earnings(Adj.)">Lowest PE</a></td>
+        <td class="text-center"><input type="number" id="rpe_lowest_pe" onchange="countvRpe()"></td>
+      </tr>
+      <tr>
+        <td><a data-toggle="popover" title="Diluted EPS(Adj.)" data-content="In Income Statement Ratios:Diluted EPS(Adj.)">Diluted EPS (Adj)</a></td>
+        <td class="text-center"><input type="number" id="rpe_diluted_eps" onchange="countvRpe()"></td>
+      </tr>
+      <tr>
+        <td class="text-center"><strong>Intrinsic Value</strong><br><p id="rpe_intrinsic_value" class="plusmin"></p></td>
+        <td class="text-center"><strong>Margin of Safety</strong><br><p id="rpe_margin_safety" class="plusmin"></p></td>
+      </tr>
+      <tr>
+        <td class="text-center"><a data-toggle="popover" title="Current Share Price" data-content="In first page of stock the most above part">Current Share Price</a><br><input type="number" id="rpe_share_price" onchange="countvRpe()"></td>
+        <td class="bg-success text-center">AVG PE<br><p id="rpe_avg_pe" class="plusmin"></p></td>
+      </tr>
+    </tbody>
+  </table>
+  <script>
+    function M_P_N() {
+      var TDs = document.querySelectorAll('.plusmin');
+    
+      for (var i = 0; i < TDs.length; i++) {
+        var temp = TDs[i];
+        if (temp.firstChild.nodeValue.indexOf('-') == 0) {temp.className = "negative";}
+        else {temp.className = "positive";}
+      }
+    }
+      function countvRpe(){
+        var v_rpe_highest_pe = parseFloat(document.getElementById("rpe_highest_pe").value);
+        var v_rpe_lowest_pe = parseFloat(document.getElementById("rpe_lowest_pe").value);
+        var v_rpe_diluted_eps = parseFloat(document.getElementById("rpe_diluted_eps").value);
+        var v_rpe_share_price = parseFloat(document.getElementById("rpe_share_price").value);
+        var v_rpe_rpe = (v_rpe_highest_pe+v_rpe_lowest_pe)/2;
+        var v_rpe_intrinsic_value =  v_rpe_rpe*v_rpe_diluted_eps;
+        var v_rpe_margin_safety =  ((v_rpe_intrinsic_value-v_rpe_share_price)/v_rpe_intrinsic_value)*100;
+        var s_rpe_margin_safety = document.getElementById("rpe_margin_safety");
+        var s_rpe_intrinsic_value = document.getElementById('rpe_intrinsic_value');
+        var s_rpe_avg_pe = document.getElementById('rpe_avg_pe');
+        s_rpe_intrinsic_value.innerHTML = "$"+(v_rpe_intrinsic_value.toFixed(2));
+        s_rpe_avg_pe.innerHTML = v_rpe_rpe.toFixed(2);
+        s_rpe_margin_safety.innerHTML = v_rpe_margin_safety.toFixed(2)+"%";
+        M_P_N();
+      }
+  </script>
+    </div>
+    <div id="DY" class="tab-pane fade"><br>
+    <!--DY-->
+      <h3><a href="#" class="list-group-item list-group-item-action"  data-toggle="collapse" data-target="#mean_DY">DY</a></h3>
+        <div id="mean_DY" class="collapse">
+            <p><strong>意思：</strong><br>Dividend yield就是股息率/周息率。</p>
+            <p><strong>实列：</strong><br>某只股票目前的股价为1令吉，而过去一年总派息为10仙，那这只股票目前的周息率 = RM0.10 / RM1.00 X 100% = 10%,
+和定期一样原理，比如投资RM1000，10% 就是会赚到股息RM100，
+比如公司派10SEN ，你买1000股（10Lot），1000x0.10=拿到RM100 。</p>
+  </div>
+      <table class="table table-sm">
+    <thead class="w3-blue">
+      <tr>
+        <th colspan="2" class="text-center">Dividend Stock (> 5%)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a data-toggle="popover" title="Last Dividend" data-content="In Cash Flow Ratios">Last Dividend</a></td>
+        <td class="text-center"><input type="number" id="DY_last_dividend" onchange="calc_DY_value()"></td>
+      </tr>
+      <tr>
+        <td><a data-toggle="popover" title="Desired Dividend Yield" data-content="Any number > 0.05">Desired Dividend Yield</a></td>
+        <td class="text-center"><input type="number" id="DY_desired_dividend_yield" onchange="calc_DY_value()"></td>
+      </tr>
+      <tr>
+        <td class="text-center"><strong>Intrinsic Value</strong><br><p id="DY_intrinsic_value" class="plusmin"></p></td>
+        <td class="text-center"><strong>Margin of Safety</strong><br><p id="DY_margin_of_safety" class="plusmin"></p></td>
+      </tr>
+      <tr>
+        <td class="text-center">Current Share Price<br><input type="number" id="DY_current_share_price" onchange="calc_DY_value()"></td>
+        <td class="w3-blue text-center">Current Dividend Yield<br><p id="DY_current_dividend_yield" class=" plusmin"></p></td>
+      </tr>
+    </tbody>
+  </table>
+    <script>
+      function calc_DY_value(){
+          var v_DY_last_dividend = parseFloat(document.getElementById('DY_last_dividend').value);
+          var v_DY_desired_dividend_yield = parseFloat(document.getElementById('DY_desired_dividend_yield').value);
+          var v_DY_current_share_price = parseFloat(document.getElementById('DY_current_share_price').value);
+          var s_DY_intrinsic_value =document.getElementById('DY_intrinsic_value');
+          var s_DY_margin_of_safety =document.getElementById('DY_margin_of_safety');
+          var s_DY_current_dividend_yield=document.getElementById('DY_current_dividend_yield');
+          var v_DY_intrinsic_value = v_DY_last_dividend/v_DY_desired_dividend_yield;
+          var v_DY_margin_of_safety = ((v_DY_intrinsic_value-v_DY_current_share_price)/v_DY_intrinsic_value)*100;
+          var v_DY_current_dividend_yield = (v_DY_last_dividend/v_DY_current_share_price)*100;
+          s_DY_intrinsic_value.innerText= v_DY_intrinsic_value.toFixed(2);
+          s_DY_margin_of_safety.innerText= v_DY_margin_of_safety.toFixed(2)+"%";
+          s_DY_current_dividend_yield.innerText= v_DY_current_dividend_yield.toFixed(2)+"%";
+          M_P_N();
+      }
+  </script>
+    </div>
+    <div id="PEG" class="tab-pane fade"><br>
+     <!--PEG-->
+      <h3><a class="list-group-item list-group-item-action"  data-toggle="collapse" data-target="#mean_PEG">PEG</a></h3>
+        <div id="mean_PEG" class="collapse">
+    <p><strong>意思：<br></strong>PEG指标即市盈率相对盈利增长比率，是由上市公司的市盈率除以盈利增长速度得到的数值。</p>
+ <p><strong>走势：</strong><br><strong>PEG值= 1</strong>代表股票是<strong>合理价值</strong><br><strong>0< PEG值< 1</strong>代表股票是<strong>被低估</strong><br><strong>PEG值> 1</strong>代表股票是<strong>被高估</strong></p>
+  <p><strong>实列：<br></strong>假设某只股票的市盈率为30，通过计算和预测，得到企业盈利增长率为15%，则该股票的PEG为30÷15=2，如果盈利增长率为30%，则PEG为30÷30=1，如果盈利增长率为60%，则PEG为30÷60=0.5。</p>
+    <p><strong>注意：</strong><br>1. 只适用于拥有<strong>稳定收入和盈利的公司</strong><br>2. PEG<strong>的准确度</strong>(3-5年复合增长率)</p>
+    <h5>简单教学:  <button type="button" class="btn btn-primary collapsed" data-toggle="collapse" data-target="#PEGslide" aria-expanded="false"><i class="fas fa-chevron-down" aria-hidden="true"></i></button></h5>
+  <hr>
+            <div id="PEGslide" class="carousel slide collapse" data-ride="carousel">
+
+
+  
+  <!-- The slideshow -->
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="https://i.imgur.com/IMvDtDf.jpg" alt="Caution1" width="700" height="500">
+      <hr>
+      <p>
+【使用PEG要注意的事项】
+<br><br>
+<strong>1. 只适用于拥有稳定收入和盈利的公司</strong>
+<br><br>
+- 和市盈率一样，如果公司<strong>亏损或盈利</strong>的落差起伏很<strong>大</strong>，<strong>每股盈利</strong>的数字<strong>太小</strong>，<strong>市盈率也失去了参考价值</strong>。<br>如此一来，计算出来的<strong>PEG就没有意义</strong>了。
+<br><br>
+<strong>2. PEG的准确度</strong>
+<br><br>
+- <strong>PEG比率的准确度取决于所使用的盈利增长率，是1年、3年或5年。<br></strong>如果只参考了公司一年业绩的增长情况，容易因为阶段性盈利或亏损而导致<strong>错误估算</strong>。所以，建议使用近<strong>3年或5年</strong>的年复合增长率来计算。</p>
+    </div>
+    <div class="carousel-item">
+      <img src="https://i.imgur.com/t8cv1RF.jpg" alt="Caution2" width="700" height="500">
+    </div>
+    <div class="carousel-item">
+      <img src="https://i.imgur.com/tkJPoE7.jpg" alt="New York" width="700" height="500">
+    </div>
+    <div class="carousel-item">
+      <img src="https://i.imgur.com/8WxqDBi.jpg" alt="New York" width="700" height="500">
+    </div>
+    <div class="carousel-item">
+      <img src="https://i.imgur.com/IOvBNte.jpg" alt="New York" width="700" height="500">
+    </div>
+  </div>
+  
+  <!-- Left and right controls -->
+  <a class="carousel-control-prev" href="#PEGslide" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#PEGslide" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
+</div>
+  </div>
+            <table class="table table-sm">
+    <thead class="bg-warning">
+      <tr>
+        <th colspan="2" class="text-center">Growth Stock (PEG < 1)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a data-toggle="popover" title="Current EPS" data-content="In Income Statement Ratios">Current EPS</a></td>
+        <td class="text-center"><input type="number" id="PEG_current_eps" onchange="cal_PEG_value()"></td>
+      </tr>
+      <tr>
+        <td><a data-toggle="popover" title="Current EPS" data-content="In Other ratios - The nearest>15%">EPS Growth</a></td>
+        <td class="text-center"><input type="number" id="PEG_eps_growth" onchange="cal_PEG_value()"></td>
+      </tr>
+      <tr>
+        <td class="text-center"><strong>Intrinsic Value</strong><br><p id="PEG_intrinsic_value"  class="plusmin" ></p></td>
+        <td class="text-center"><strong>Margin of Safety</strong><br><p id="PEG_margin_of_safety"  class="plusmin"></p></td>
+      </tr>
+      <tr>
+        <td class="text-center">Current Share Price<br><input type="number" id="PEG_current_share_price" onchange="cal_PEG_value()"></td>
+        <td class="bg-warning text-center">Current PEG<br><p id="PEG_current_peg"  class="plusmin"></p></td>
+      </tr>
+    </tbody>
+  </table>
+    <script>
+      function cal_PEG_value(){
+          var v_PEG_current_eps = parseFloat(document.getElementById('PEG_current_eps').value);
+          var v_PEG_eps_growth = parseFloat(document.getElementById('PEG_eps_growth').value);
+          var v_PEG_current_share_price = parseFloat(document.getElementById('PEG_current_share_price').value);
+          var s_PEG_intrinsic_value =document.getElementById('PEG_intrinsic_value');
+          var s_PEG_margin_of_safety =document.getElementById('PEG_margin_of_safety');
+          var s_PEG_current_peg=document.getElementById('PEG_current_peg');
+          var v_PEG_intrinsic_value = v_PEG_current_eps*v_PEG_eps_growth*100;
+          var v_PEG_margin_of_safety = ((v_PEG_intrinsic_value-v_PEG_current_share_price)/v_PEG_intrinsic_value)*100;
+          var v_PEG_current_peg = (v_PEG_current_share_price/v_PEG_current_eps)/(v_PEG_eps_growth*100);
+          s_PEG_intrinsic_value.innerText= '$'+v_PEG_intrinsic_value.toFixed(2);
+          s_PEG_margin_of_safety.innerText= v_PEG_margin_of_safety.toFixed(2)+'%';
+          s_PEG_current_peg.innerText= v_PEG_current_peg.toFixed(2);
+          M_P_N();
+      }
+  </script>
+    </div>
+    <div id="CAGR" class="tab-pane fade"><br>
+    <!--CAGR-->
+      <h3><a href="#" class="list-group-item list-group-item-action"  data-toggle="collapse" data-target="#mean_CAGR">CAGR</a></h3>
+        <div id="mean_CAGR" class="collapse">
+    <p><strong>意思：</strong><br>复合年均增长率(CAGR)是指一项投资在一特定时期内的年度增长率。</p>
+  <p><strong>实列：</strong><br> 一只股票从RM 100 升到 RM 121 通过两年, 他的CAGR是10%.第一年他从100到110涨了10%，第二年他从110到121也涨了10%。</p>
+  </div>
+      <table class="table table-sm bg-light">
+    <thead class="bg-danger">
+      <tr>
+        <th colspan="6" class="text-center">CAGR</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td colspan="1"></td>
+        <td class="text-center" colspan="2">Year</td>
+        <td class="text-center" colspan="3"><a data-toggle="popover" title="Diluted EPS (adj)" data-content="In Income Statement Ratios">Diluted EPS (adj)</a></td>
+      </tr>
+      <tr>
+        <td colspan="1">开始</td>
+        <td class="text-center" colspan="2"><input type="number" id="CAGR_year_start" onchange="calc_CAGR_value()"></td>
+        <td class="text-center" colspan="3"><input type="number" id="CAGR_diluted_eps_start" onchange="calc_CAGR_value()"></td>
+      </tr>
+      <tr>
+        <td colspan="1">结束</td>
+        <td class="text-center"  colspan="2"><input type="number" id="CAGR_year_end" onchange="calc_CAGR_value()"></td>
+        <td class="text-center" colspan="3"><input type="number" id="CAGR_diluted_eps_end" onchange="calc_CAGR_value()"></td>
+      </tr>
+      <tr>
+        <td colspan="1">年数</td>
+        <td class="text-center" colspan="2" id="CAGR_number_of_year"><p></p></td>
+        <td colspan="3"></td>
+      </tr>
+      <tr>
+        <td colspan="1">CAGR</td>
+        <td colspan="2"></td>
+        <td class="text-center" colspan="3" id="CAGR_cagr"><p></p></td>
+      </tr>
+    </tbody>
+  </table>
+    <script>
+      function calc_CAGR_value(){
+          var v_CAGR_year_start = parseInt(document.getElementById('CAGR_year_start').value);
+          var v_CAGR_year_end = parseInt(document.getElementById('CAGR_year_end').value);
+          var v_CAGR_diluted_eps_start = parseFloat(document.getElementById('CAGR_diluted_eps_start').value);
+          var v_CAGR_diluted_eps_end = parseFloat(document.getElementById('CAGR_diluted_eps_end').value);
+          var s_CAGR_number_of_year = document.getElementById('CAGR_number_of_year');
+          var s_CAGR_cagr = document.getElementById('CAGR_cagr');
+          var v_CAGR_number_of_year = v_CAGR_year_end-v_CAGR_year_start;
+          var v_CAGR_cagr = (((v_CAGR_diluted_eps_end/v_CAGR_diluted_eps_start)**(1/v_CAGR_number_of_year))-1)*100;
+          s_CAGR_number_of_year.innerHTML=v_CAGR_number_of_year;
+          s_CAGR_cagr.innerHTML=v_CAGR_cagr.toFixed(2)+'%';
+          M_P_N();
+      }
+  </script>
+    </div>
+
+  </div>
+      <br>
+    <hr>
+    
+<div class="mt-3">
+   <h3>Other Calculate: <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#accordion"><i class='fas fa-chevron-down'></i></button></h3> 
+  <div id="accordion" class="collapse">
+    <div class="card">
+      <div class="card-header">
+        <a class="card-link" data-toggle="collapse" href="#collapseOne">
+          PE
+        </a>
+      </div>
+      <div id="collapseOne" class="collapse" data-parent="#accordion">
+        <div class="card-body">
+
+        <pre>
+Formula:
+                    Price
+        PE = --------------------------
+                Earnings Per Share
+        pe：{0}x年回本 \n 人们愿意用{0}倍买一块钱 <br>基本面好坏 pe底应该参考市场是否是公司本身还是大市场问题 <br>（基本面和市场因素并未参考）
+      </pre>
+    <label>Price:</label>
+    <br><input type="number" id="pe_price">
+    <br>
+    <label>Eps:</label>
+    <br><input type="number" id="pe_eps">
+    <br>
+    <br>
+    <button type="button" value="Submit" onclick="countPe()">Submit</button>
+    <p id="pe_result"></p>
+    <script>
+      function countPe(){
+        var price = document.getElementById("pe_price").value;
+        var eps = document.getElementById("pe_eps").value;
+        var pe_result = document.getElementById("pe_result");
+        var pe = parseInt(price)/parseInt(eps);
+        pe_result.innerHTML = "PE："+pe.toFixed(2)+"x年回本 <br> 人们愿意用"+pe.toFixed(2)+"倍买一块钱<br>(PE低需参考是市场好坏还是公司本身问题)";
+        M_P_N();
+      }
+    </script>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+        RPE
+      </a>
+      </div>
+      <div id="collapseTwo" class="collapse" data-parent="#accordion">
+        <div class="card-body">
+                  <pre>   
+           Income Statement 可以找PE
+        需要:
+        -需要一样生意模式（3-10年份）
+        -需要稳定和强壮的公司，缓慢增长>15%
+        
+                Highest Pe + Lowest Pe
+        RPE = ----------------------------
+                            2
+        合理价钱/RPE/fair price: RPE
+        
+        </pre>
+    <pre>
+    <strong>-需要一样生意模式（3-10年份）</strong>
+    <strong>-需要稳定和强壮的公司，缓慢增长>15%</strong>
+    </pre>
+    <label>The highest PE:</label>
+    <br><input type="number" id="rpe_h_pe">
+    <br>
+    <label>The lowest PE:</label>
+    <br><input type="number" id="rpe_l_pe">
+    <br>
+    <br>
+    <button type="button" value="Submit" onclick="countRpe()">Submit</button>
+    <p id="rpe_result"></p>
+    <script>
+      function countRpe(){
+        var rpe_h_pe = document.getElementById("rpe_h_pe").value;
+        var rpe_l_pe = document.getElementById("rpe_l_pe").value;
+        var rpe_result = document.getElementById("rpe_result");
+        var rpe_r = (parseInt(rpe_h_pe)+parseInt(rpe_l_pe))/2;
+        rpe_result.innerHTML = "合理价钱/RPE/fair price: " + rpe_r.toFixed(2);
+        M_P_N();
+      }
+    </script>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br><hr>
+<div class="form-group">
+      <label for="comment">Note:</label>
+      <textarea class="form-control" rows="5" id="comment" name="text"></textarea>
+    </div>
+    <br><hr>
+</div>
+     </div>
+<div id="menu1" class="tab-pane fade"><br>
+      <h3>财务报表</h3>
+
+      <table class="table table-bordered table-sm bg-light">
+    <thead>
+      <tr>
+        <th>Profitability</th>
+        <th>Inflow Cash</th>
+        <th>Efficiency</th>
+        <th>Conservative</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td> <a href="#Revenue" class="list-group-item list-group-item-action"  data-toggle="collapse" data-target="#cb_meanRevenue">Revenue</a>
+        <div id="cb_meanRevenue" class="collapse">
+        <p><strong>In Income Statement</strong></p>
+        <p><strong>走势：</strong><br>-正数（+） <br>-增加/保持</p>
+        <p><strong>收入（Revenue）增加代表公司正在成长。</strong></p>
+        </div>
+</td>
+        <td> <a class="list-group-item list-group-item-action"  data-toggle="collapse" data-target="#cb_meanCF_Operation">CF Operation</a>
+        <div id="cb_meanCF_Operation" class="collapse">
+        <p><strong>In Balance Sheet</strong></p>
+        <p><strong>走势：</strong><br>-正数（+） <br>-增加/保持</p>
+        <p><strong>（Cash from Operations ）经营活动产生的现金是指公司在一段时间内开展经营活动产生的现金量，例如产生收入，支付费用和为营运资金提供资金。</strong></p>
+        </div></td>
+        <td>
+<a class="list-group-item list-group-item-action"  data-toggle="collapse" data-target="#cb_meanROE">Return on Equity(Adj)</a>
+        <div id="cb_meanROE" class="collapse">
+        <p><strong>In Income Statement</strong></p>
+        <p><strong>走势：</strong><br>-正数（+） <br>-增加/保持<br>-> 15%</p>
+        <p><strong>股本回报率来回报股东权益（身家），反映该公司产生的净利润由净资产。</strong></p>
+        </div></td>
+        <td><a class="list-group-item list-group-item-action"  data-toggle="collapse" data-target="#cb_meanTotal_Debt">Total Debt to Equity</a>
+        <div id="cb_meanTotal_Debt" class="collapse">
+        <p><strong>In Balance Sheet</strong></p>
+        <p><strong>走势：</strong><br>-正常< 0.5x<br>-危险>= 0.5% <br>-破产> 1.5x</p>
+        <p><strong>总债务权益比率是指权益与债务的关系。</strong></p>
+        </div></td>
+      </tr>
+      <tr>
+        <td> <a class="list-group-item list-group-item-action"  data-toggle="collapse" data-target="#cb_meanNetIncome">Net Income</a>
+        <div id="cb_meanNetIncome" class="collapse">
+        <p><strong>In Income Statement</strong></p>
+        <p><strong>走势：</strong><br>-正数（+） <br>-增加/保持/有原因的减少</p>
+        <p><strong>净收入是还税和其他支出后的净盈利。主要是增加，但是有扩展业务可在两年内相对的减少。</strong></p>
+        </div></td>
+        <td><a class="list-group-item list-group-item-action"  data-toggle="collapse" data-target="#cb_meanCF_Finance">CF Finance</a>
+        <div id="cb_meanCF_Finance" class="collapse">
+        <p><strong>In Balance Sheet</strong></p>
+        <p><strong>走势：</strong><br>-负数（-） <br>-减少/保持</p>
+        <p><strong>（Cash flow from financing）筹资活动产生的现金流量是指公司从事筹资活动产生的现金数额，包括涉及债务，股权和股利的交易。 负数表示清除债务，分配股息等是好的。</strong></p>
+        </div></td>
+        <td></td>
+        <td><a class="list-group-item list-group-item-action"  data-toggle="collapse" data-target="#cb_meanNet_Debt">Net Debt(Cash)</a>
+        <div id="cb_meanNet_Debt" class="collapse">
+        <p><strong>In Balance Sheet</strong></p>
+        <p><strong>走势：</strong><br>-负数（-） <br>-减少/保持</p>
+        <p><strong>（Net Debt(Cash))权益净债务（现金）是指公司的净债务。 所以越少，效果越好。</strong></p>
+        </div></td>
+      </tr>
+      <tr>
+        <td><a class="list-group-item list-group-item-action"  data-toggle="collapse" data-target="#cb_meanDiluted_EPS">Diluted EPS(Adj)</a>
+        <div id="cb_meanDiluted_EPS" class="collapse">
+        <p><strong>In Income Statement</strong></p>
+        <p><strong>走势：</strong><br>-正数（+） <br>-增加/保持</p>
+        <p><strong>（Diluted Earning Per Share ）稀释每股收益是指税后每股收益</strong></p>
+        </div></td>
+        <td><a class="list-group-item list-group-item-action"  data-toggle="collapse" data-target="#cb_meanCF_Invest">CF Invest</a>
+        <div id="cb_meanCF_Invest" class="collapse">
+        <p><strong>In Balance Sheet</strong></p>
+        <p><strong>走势：</strong><br>-正数（+） <br>-增加/保持</p>
+        <p><strong>（Cash flow from investing）从投资方式从开展投资活动的公司的现金数额的现金流量包括实物资产的购买，证券投资，或出售证券或资产。 负数表示不好，表示公司在变卖自己的主要业务或资产。</strong></p>
+        </div></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td> <a class="list-group-item list-group-item-action"  data-toggle="collapse" data-target="#cb_meanCAPEX">CAPEX</a>
+        <div id="cb_meanCAPEX" class="collapse">
+        <p><strong>In Balance Sheet</strong></p>
+        <p><strong>走势：</strong><br>-正数（+）/负数(-)两年内 <br>-增加/保持/减少则需年后利润增长</p>
+        <p><strong>CAPEX意味着公司扩大了业务。 公司在两年的范围内可能为负值，但年后利润应会增长。 利润增长意味着扩展值得。</strong></p>
+        </div></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td> <a class="list-group-item list-group-item-action"  data-toggle="collapse" data-target="#cb_meanFCF">FCF</a>
+        <div id="cb_meanFCF" class="collapse">
+        <p><strong>In Balance Sheet</strong></p>
+        <p><strong>走势：</strong><br>-正数（+) <br>-增加/保持</p>
+        <p><strong>Free cash flow (FCF)指公司在考虑现金流出以支持运营并维护其资本资产后产生的现金。</strong></p>
+        </div></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+      <br>
+      <div>
+    <br><hr>
+          <div class="row">
+              <div class="col">
+                  <input class="w3-check w3-right" type="checkbox" checked="checked">
+                 </div>
+              <div class="col">
+                  <input class="w3-check w3-right" type="checkbox" checked="checked">
+                  </div>
+              <div class="col">
+                  <input class="w3-check w3-right" type="checkbox" checked="checked">
+              </div>
+              <div class="col">
+                  <input class="w3-check w3-right" type="checkbox" checked="checked">
+                  </div>
+    </div>
+    <br><hr>
+    <input class="w3-check w3-right" type="checkbox" checked="checked">
+    <br><hr>
+    <div class="form-group">
+      <label for="comment">Note:</label>
+      <textarea class="form-control" rows="5" id="comment" name="text"></textarea>
+    </div>
+    <br><hr>
+    </div>
+    </div>
+    <div id="menu2" class="tab-pane fade"><br>
+      <h3>公司衡量</h3>
+  <table class="table table-bordered table-sm">
+    <thead>
+      <tr>
+        <th colspan="2">Business Model</th>
+        <th colspan="2">Management</th>
+        <th colspan="2">Number</th>
+        <th colspan="2">Economic Moat</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td colspan="2"><input class="w3-check w3-center" type="checkbox" checked="checked" ></td>
+        <td colspan="2"><input class="w3-check w3-center" type="checkbox" checked="checked"></td>
+        <td colspan="2"><input class="w3-check w3-center" type="checkbox" checked="checked"></td>
+        <td colspan="2"><input class="w3-check w3-center" type="checkbox" checked="checked"></td>
+      </tr>        
+      <tr>
+        <td><textarea class="form-control" rows="5" id="comment" name="text" placeholder="好"></textarea></td>
+        <td><textarea class="form-control" rows="5" id="comment" name="text" placeholder="坏"></textarea></td>
+        <td><textarea class="form-control" rows="5" id="comment" name="text" placeholder="好"></textarea></td>
+        <td><textarea class="form-control" rows="5" id="comment" name="text" placeholder="坏"></textarea></td>
+        <td><textarea class="form-control" rows="5" id="comment" name="text" placeholder="好"></textarea></td>
+        <td><textarea class="form-control" rows="5" id="comment" name="text" placeholder="坏"></textarea></td>
+        <td><textarea class="form-control" rows="5" id="comment" name="text" placeholder="好"></textarea></td>
+        <td><textarea class="form-control" rows="5" id="comment" name="text" placeholder="坏"></textarea></td>
+      </tr>
+    </tbody>
+  </table>
+<div class="form-group">
+      <label for="comment">Note:</label>
+      <textarea class="form-control" rows="5" id="comment" name="text"></textarea>
+    </div>
+    </div>
+    </div>
+
+<script>
+$(document).ready(function(){
+  $(".nav-tabs a").click(function(){
+    $(this).tab('show');
+  });
+});
+</script>
+        </div>
+             
+    </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+    <script src="script.js"></script>
+    <script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myDIV *").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+</div>
+</div>
+</body>
+</html>
