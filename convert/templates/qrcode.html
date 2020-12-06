@@ -1,45 +1,748 @@
-﻿{% block content %}
-
-<head>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/pro.css">
-    <title>ZW-QRCODE</title>
-</head>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <title>股票算法-kzw</title>
+    <style>
+      @media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  body{
+    width: 1200px;
+  }
+  #model_ca{
+      width:1200px;
+  }
+}
+#Calculator {
+  position: fixed;
+  right: 0;
+  top: 80%;
+  width: 8em;
+  margin-top: -3.5em;
+}
 
-<body style="background-color:cornflowerblue" onload="clear()">
-    <div class="w3-container w3-card"><h2 style="color:rebeccapurple;"><b>ZW-QRCODE</b></h2></div>
-    <div class="row w3-container">
-        <div class="w3-container" style="width:100%">
-            <form method="post" class="form-horizontal" style="margin-top:90px" action="dlqrcode">
-                <div class="form-group">
-                    {% csrf_token %}
-                    <label for="id_username" class="col-md-2 control-label"><b>Content/内容：</b></label>
-                    <div class="col-md-10" style="margin-top:20px">
-                        {{ form.t_url }}
-                    </div>
-                </div>
-                <input type="submit" value="submit" class="btn btn-default w3-button w3-blue" style="margin-top:20px" />
-            </form>
-        </div>
-        <div style="width:100%;margin-top:90px;margin-bottom:20px;" class="w3-container">
-            <label for="preview" id="preview1" hidden><b>预览 ：</b></label>
-            <div style="margin-top:20px;margin-bottom:20px">
-                <embed src="{{dlurl}}" id="embed1" hidden />
-                <img src="{{dlurl}}">
-            </div>
-            <a href="{{ dlurl }}" id="href1" class="w3-button w3-blue" style="font-size:medium;margin-top:20px" download="{{ dlurl }}" hidden>点击下载文件：{{ context }}</a>
-        </div>
-    </div>
-    <div style="height:20px;position:fixed;bottom:0px;">
-        <footer style="color:rebeccapurple;font-style:italic;">@by:ZW</footer>
-    </div>
-</body>
-<script type="text/javascript">
-        function clear() {
-            document.getElementById('preview1').removeAttribute('hidden');
-            document.getElementById('href1').removeAttribute('hidden');
-            document.getElementById('embed1').removeAttribute('hidden');
-        }
+	.negative { color : red; }
+	.positive { color : green; }
+
+    </style>
+    <script>
+$(document).ready(function(){
+  $('[data-toggle="popover"]').popover();   
+});
 </script>
-{% endblock %}
+  </head>
+  <body>
+  <div class="container-fluid">
+     <div class="row bg-light">
+    <div class="col-8">
+    <nav class="navbar navbar-expand bg-light ">
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" href="#">Home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="invest.html">CALC&NOTE</a>
+    </li>
+  </ul>
+</nav>
+</div>
+    <div class="col-4 float-right  bg-light ">
+        <input class="form-control" id="myInput" type="text" placeholder="Search..">
+    </div>
+</div>
+    <div class="jumbotron jumbotron-fluid">
+    <div class="container-fluid">
+
+    <h1>股票算法及知识总结</h1>
+    </div>
+    </div>
+    <div id="myDIV">
+    <h4>四个因素代表公司的价值</h4>
+    <div class="row">
+      <div class="col"><strong>Profitability</strong><hr>
+      <div class="list-group list-group-flush">
+  <a href="#Revenue" class="list-group-item list-group-item-action">Revenue</a>
+  <a href="#Net_Income" class="list-group-item list-group-item-action">Net Income</a>
+  <a href="#Diluted_EPS" class="list-group-item list-group-item-action">Diluted EPS(Adj)</a>
+    </div>
+    </div>
+      <div class="col"><strong>Inflow Cash</strong><hr>      
+      <div class="list-group list-group-flush">
+  <a href="#CF_Operation" class="list-group-item list-group-item-action">CF Operation</a>
+  <a href="#CF_Invest" class="list-group-item list-group-item-action">CF Invest</a>
+  <a href="#CF_Finance" class="list-group-item list-group-item-action">CF Finance</a>
+  <a href="#CAPEX" class="list-group-item list-group-item-action">CAPEX</a>
+  <a href="#FCF" class="list-group-item list-group-item-action">FCF</a>
+    </div>
+    </div>
+      <div class="col"><strong>Efficiency</strong><hr>      
+      <div class="list-group list-group-flush">
+  <a href="#ROE" class="list-group-item list-group-item-action">Return on Equity(Adj)</a>
+    </div>
+    </div>
+      <div class="col"><strong>Conservative</strong><hr>      
+      <div class="list-group list-group-flush">
+  <a href="#Total_Debt" class="list-group-item list-group-item-action">Total Debt to Equity</a>
+  <a href="#Net_Debt" class="list-group-item list-group-item-action">Net Debt(Cash) to Equity</a>
+    </div>
+    </div>
+    </div>       
+    <hr>
+<div class="table-responsive">
+  <h2>财表上必看资料</h2>           
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Section</th>
+        <th>Condition</th>
+        <th>Meaning</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+          <td colspan='3'><b>Income Statement</b></td>
+    </tr>
+      <tr>
+        <td id="Revenue">Revenue</td>
+        <td>-Positive<br>-Increase/Constant</td>
+        <td>Revenue increases means growing company.</td>
+      </tr>
+      <tr>
+        <td id="Net_Income">Net Income(Adj.)</td>
+        <td>-Positive<br>-Increase or Constant or Decrease with reason</td>
+        <td>Net Income(Adj.) means the net profit after taxes and liabities. It should be increases mainly but in range of two years decreases with reason like develop a big project is acceptable. </td>
+      </tr>
+      <tr>
+        <td id="Gross_Profit_Margin">Gross Profit Margin</td>
+        <td>-Positive <br>-Increase</td>
+        <td>Gross Profit Margin means a ratio of profit of sales increases after operating cost. </td>
+      </tr>
+      <tr>
+        <td id="Net_Profit_Margin">Net Profit Margin</td>
+        <td>-Positive <br>-Increase</td>
+        <td>Net Profit Margin means the level of profit from sales.</td>
+      </tr>
+      <tr>
+        <td id="ROE">Return On Equity(ROE)</td>
+        <td>-Positive <br>-Increase<br>->15%</td>
+        <td>Return On Equity means return on shareholders' equity(身家) and reflect the company generate net profit by net assets.</td>
+      </tr>
+        <tr>
+        <td id="Diluted_EPS">Diluted EPS(Adj.)</td>
+        <td>-Positive <br>-Increase</td>
+        <td>Diluted Earning Per Share means the profit per share after taxes.</td>
+      </tr>
+        <tr>
+          <td colspan='3'><b>Balance Sheet</b></td>
+    </tr>
+      <tr>
+        <td id="Total_Debt">Total Debt to Equity Ratio</td>
+        <td>-Normal< 0.5x <br>-Danger>= 0.5x <br>-Bankruptcy> 1.5x</td>
+        <td>Total Debt to Equity Ratio means the equity and debt relationship.  </td>
+      </tr>
+        <tr>
+        <td id="Net_Debt">Net Debt(Cash) to Equity</td>
+        <td>-Negative<br>-Decrease</td>
+        <td>Net Debt(Cash) to Equity means the company net debt. So the least, the best. </td>
+      </tr>
+       <tr>
+        <td id="CAPEX">CAPEX</td>
+        <td>-Negative in two year<br>-Profit Increase</td>
+        <td>CAPEX means the company expand their business. Company can be negative in range of two years but profit after the year should grow. Profit grow means the expand is worth.</td>
+      </tr>
+      <tr>
+        <td id="CF_Operation">Cash from Operations</td>
+        <td>-Positive<br>-Increase</td>
+        <td>Cash from Operations means the amount of cash of a company from carrying out operation like generate revenue,paying expenses and funding working capital over a period of time.</td>
+      </tr>
+      <tr>
+        <td id="CF_Finance">Cash Flow from Financing</td>
+        <td>-Negative<br>-Decrease</td>
+        <td>Cash flow from financing means the amount of cash of a company from carrying out financing activities include transactions involving debt, equity, and dividends. Negative means clear the debt, give dividend etc and is good;</td>
+      </tr>
+      <tr>
+        <td id="CF_Invest">Cash Flow from Investing</td>
+        <td>-Positive <br>-Increase</td>
+        <td>Cash flow from investing means the amount of cash of a company from carrying out investing activities include purchases of physical assets, investments in securities, or the sale of securities or assets. Negative is bad and mean poor performance. </td>
+      </tr>
+      <tr>
+        <td id="FCF">Free Cash Flow (FCF)</td>
+        <td>-Positive <br>-Increase</td>
+        <td>Free cash flow (FCF) means the cash a company generates after accounting for cash outflows to support operations and maintain its capital assets. </td>
+      </tr>
+        <tr>
+          <td colspan='3'><b>Valuation Ratios</b></td>
+    </tr>
+    </tbody>
+  </table>
+</div> 
+  </div>
+        <pre>
+    print('Price Earnings to Growth\nGood Company\nFast Growth>15%')
+    print('Growth>15% 是不错的;Growth>30%是快速且少许危险的;担心风险就全部放30%')
+    #p=share price;
+    #P= Growth*EPS = Fair Value
+    #Diluted(adj.) EPS Growth（In Other ratio） = 5Year CAGR
+    #n Year CAGR是之前到现在的n年成长
+    #EPS=5.27
+    #Growth=38
+    #Entry Value = Growth * EPS
+    #p/e = g = fair value
+    #p/e : Growth
+    #10x = 10% = Fair Value 合理价 *
+    #30x < 50% = Under Value 低估
+    #50x > 20% = Over Value 高估
+    eps = float(input('eps:'))
+    growth = float(input('最新且超15%更久的增长（In Other ratio）:'))
+    print('Enrty Value=Growth{0}*EPS{1}'.format(growth,eps))
+    print(growth*eps)
+    
+      </pre>
+            <!--Value-->
+<template>
+      <pre>
+          估值方法：
+          
+                        Dividend per share 每股股息
+          Value= ------------------------------------------------
+                    Required Rate of Return 你想要的股息回报
+        
+          Required Rate of Return = 5% - 7% (0.05 - 0.07)
+          PRICE < Value = UnderValue 
+      </pre>
+</template>
+
+<!--Calculator-->
+  <div id="Calculator">
+  <button data-toggle="modal" data-target="#myModal"><i class="fa fa-calculator" style="font-size:36px"></i></button>
+  </div>
+  <!-- The Modal -->
+  <div class="modal fade" id="myModal" >
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">分析器</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+        <h2><input type="text"></h2>
+         <div class=" mt-3">
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" href="#home">RPE,DY,PEG,CAGR计算</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#menu1">财务报表</a>
+    </li>
+        <li class="nav-item">
+      <a class="nav-link" href="#menu2">公司衡量</a>
+    </li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div id="home" class=" tab-pane active"><br>
+    <div>
+    <h3>RPE,DY,PEG计算</h3>
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" data-toggle="tab" href="#RPE">RPE</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#DY">DY</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#PEG">PEG</a>
+    </li>
+        <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#CAGR">CAGR</a>
+    </li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div id="RPE" class="tab-pane active"><br>
+    <!--RPE-->
+      <h3><a href="#" class="list-group-item list-group-item-action"  data-toggle="popover" title="对比估值法又称相对估值法或对比估价法相对估值" data-content="-意思：[RPE就是将当前市盈率与公司过去的市盈率或基准的当前市盈率进行比较的量度。]；实列：[假设公司在过去10年的市盈率介于15到40之间。如果当前（绝对）市盈率是25，则相对市盈率将当前市盈率与该过去范围的最高值进行比较 为0.625（25/40），相对于范围下限的当前P / E为1.67（25/15）。 这些价值告诉投资者，该公司的市盈率目前为10年高点的62.5％，比10年低点高67％。]">RPE</a></h3>
+      <table class="table table-sm">
+    <thead class="bg-success">
+      <tr>
+        <th colspan="2" class="text-center">Relative PE</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Highest PE</td>
+        <td class="text-center"><input type="number" id="rpe_highest_pe" onchange="countvRpe()"></td>
+      </tr>
+      <tr>
+        <td>Lowest PE</td>
+        <td class="text-center"><input type="number" id="rpe_lowest_pe" onchange="countvRpe()"></td>
+      </tr>
+      <tr>
+        <td>Diluted EPS (adj)</td>
+        <td class="text-center"><input type="number" id="rpe_diluted_eps" onchange="countvRpe()"></td>
+      </tr>
+      <tr>
+        <td class="text-center"><strong>Intrinsic Value</strong><br><p id="rpe_intrinsic_value" class="plusmin"></p></td>
+        <td class="text-center"><strong>Margin of Safety</strong><br><p id="rpe_margin_safety" class="plusmin"></p></td>
+      </tr>
+      <tr>
+        <td class="text-center">Current Share Price<br><input type="number" id="rpe_share_price" onchange="countvRpe()"></td>
+        <td class="bg-success text-center">AVG PE<br><p id="rpe_avg_pe" class="plusmin"></p></td>
+      </tr>
+    </tbody>
+  </table>
+  <script>
+    function M_P_N() {
+      var TDs = document.querySelectorAll('.plusmin');
+    
+      for (var i = 0; i < TDs.length; i++) {
+        var temp = TDs[i];
+        if (temp.firstChild.nodeValue.indexOf('-') == 0) {temp.className = "negative";}
+        else {temp.className = "positive";}
+      }
+    }
+      function countvRpe(){
+        var v_rpe_highest_pe = parseFloat(document.getElementById("rpe_highest_pe").value);
+        var v_rpe_lowest_pe = parseFloat(document.getElementById("rpe_lowest_pe").value);
+        var v_rpe_diluted_eps = parseFloat(document.getElementById("rpe_diluted_eps").value);
+        var v_rpe_share_price = parseFloat(document.getElementById("rpe_share_price").value);
+        var v_rpe_rpe = (v_rpe_highest_pe+v_rpe_lowest_pe)/2;
+        var v_rpe_margin_safety =  ((v_rpe_rpe-v_rpe_share_price)/v_rpe_rpe)*100;
+        var s_rpe_margin_safety = document.getElementById("rpe_margin_safety");
+        var s_rpe_intrinsic_value = document.getElementById('rpe_intrinsic_value');
+        var s_rpe_avg_pe = document.getElementById('rpe_avg_pe');
+        s_rpe_intrinsic_value.innerHTML = v_rpe_diluted_eps*v_rpe_rpe;
+        s_rpe_avg_pe.innerHTML = v_rpe_rpe.toFixed(2);
+        s_rpe_margin_safety.innerHTML = v_rpe_margin_safety.toFixed(2);
+        M_P_N();
+      }
+  </script>
+    </div>
+    <div id="DY" class="tab-pane fade"><br>
+    <!--DY-->
+      <h3><a href="#" class="list-group-item list-group-item-action"  data-toggle="popover" title="股息率/周息率" data-content="-意思：[Dividend yield就是股息率/周息率。]；实列：[某只股票目前的股价为1令吉，而过去一年总派息为10仙，那这只股票目前的周息率 = RM0.10 / RM1.00 X 100% = 10%,
+和定期一样原理，比如投资RM1000，10% 就是会赚到股息RM100，
+比如公司派10SEN ，你买1000股（10Lot），1000x0.10=拿到RM100 。]">DY</a></h3>
+      <table class="table table-sm">
+    <thead class="bg-primary">
+      <tr>
+        <th colspan="2" class="text-center">Dividend Stock (> 5%)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Last Dividend</td>
+        <td class="text-center"><input type="number" id="DY_last_dividend" onchange="calc_DY_value()"></td>
+      </tr>
+      <tr>
+        <td>Desired Dividend Yield</td>
+        <td class="text-center"><input type="number" id="DY_desired_dividend_yield" onchange="calc_DY_value()"></td>
+      </tr>
+      <tr>
+        <td class="text-center"><strong>Intrinsic Value</strong><br><p id="DY_intrinsic_value" class="plusmin"></p></td>
+        <td class="text-center"><strong>Margin of Safety</strong><br><p id="DY_margin_of_safety" class="plusmin"></p></td>
+      </tr>
+      <tr>
+        <td class="text-center">Current Share Price<br><input type="number" id="DY_current_share_price" onchange="calc_DY_value()"></td>
+        <td class="bg-primary text-center">Current Dividend Yield<br><p id="DY_current_dividend_yield" class="plusmin"></p></td>
+      </tr>
+    </tbody>
+  </table>
+    <script>
+      function calc_DY_value(){
+          var v_DY_last_dividend = parseFloat(document.getElementById('DY_last_dividend').value);
+          var v_DY_desired_dividend_yield = parseFloat(document.getElementById('DY_desired_dividend_yield').value);
+          var v_DY_current_share_price = parseFloat(document.getElementById('DY_current_share_price').value);
+          var s_DY_intrinsic_value =document.getElementById('DY_intrinsic_value');
+          var s_DY_margin_of_safety =document.getElementById('DY_margin_of_safety');
+          var s_DY_current_dividend_yield=document.getElementById('DY_current_dividend_yield');
+          var v_DY_intrinsic_value = v_DY_last_dividend/v_DY_desired_dividend_yield;
+          var v_DY_margin_of_safety = (v_DY_intrinsic_value-v_DY_current_share_price)/v_DY_intrinsic_value;
+          var v_DY_current_dividend_yield = v_DY_last_dividend/v_DY_current_share_price;
+          s_DY_intrinsic_value.innerText= v_DY_intrinsic_value.toFixed(2);
+          s_DY_margin_of_safety.innerText= v_DY_margin_of_safety.toFixed(2);
+          s_DY_current_dividend_yield.innerText= v_DY_current_dividend_yield.toFixed(2);
+          M_P_N();
+      }
+  </script>
+    </div>
+    <div id="PEG" class="tab-pane fade"><br>
+     <!--PEG-->
+      <h3><a href="#" class="list-group-item list-group-item-action"  data-toggle="popover" title="市盈率相对盈利增长比率" data-content="-意思：[PEG指标即市盈率相对盈利增长比率，是由上市公司的市盈率除以盈利增长速度得到的数值。]；走势：[PEG值越低，说明该股的市盈率越低，或者盈利增长率越高，从而越具有投资价值。]；实列：[假设某只股票的市盈率为30，通过计算和预测，得到企业盈利增长率为15%，则该股票的PEG为30÷15=2，如果盈利增长率为30%，则PEG为30÷30=1，如果盈利增长率为60%，则PEG为30÷60=0.5。]">PEG</a></h3>
+            <table class="table table-sm">
+    <thead class="bg-warning">
+      <tr>
+        <th colspan="2" class="text-center">Growth Stock (PEG < 1)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Current EPS</td>
+        <td class="text-center"><input type="number" id="PEG_current_eps" onchange="cal_PEG_value()"></td>
+      </tr>
+      <tr>
+        <td>EPS Growth</td>
+        <td class="text-center"><input type="number" id="PEG_eps_growth" onchange="cal_PEG_value()"></td>
+      </tr>
+      <tr>
+        <td class="text-center"><strong>Intrinsic Value</strong><br><p id="PEG_intrinsic_value"  class="plusmin" ></p></td>
+        <td class="text-center"><strong>Margin of Safety</strong><br><p id="PEG_margin_of_safety"  class="plusmin"></p></td>
+      </tr>
+      <tr>
+        <td class="text-center">Current Share Price<br><input type="number" id="PEG_current_share_price" onchange="cal_PEG_value()"></td>
+        <td class="bg-warning text-center">Current PEG<br><p id="PEG_current_peg"  class="plusmin"></p></td>
+      </tr>
+    </tbody>
+  </table>
+    <script>
+      function cal_PEG_value(){
+          var v_PEG_current_eps = parseFloat(document.getElementById('PEG_current_eps').value);
+          var v_PEG_eps_growth = parseFloat(document.getElementById('PEG_eps_growth').value);
+          var v_PEG_current_share_price = parseFloat(document.getElementById('PEG_current_share_price').value);
+          var s_PEG_intrinsic_value =document.getElementById('PEG_intrinsic_value');
+          var s_PEG_margin_of_safety =document.getElementById('PEG_margin_of_safety');
+          var s_PEG_current_peg=document.getElementById('PEG_current_peg');
+          var v_PEG_intrinsic_value = v_PEG_current_eps*v_PEG_eps_growth*100;
+          var v_PEG_margin_of_safety = (v_PEG_intrinsic_value-v_PEG_current_share_price)/v_PEG_intrinsic_value;
+          var v_PEG_current_peg = (v_PEG_current_share_price/v_PEG_current_eps)/(v_PEG_eps_growth*100);
+          s_PEG_intrinsic_value.innerText= v_PEG_intrinsic_value.toFixed(2);
+          s_PEG_margin_of_safety.innerText= v_PEG_margin_of_safety.toFixed(2);
+          s_PEG_current_peg.innerText= v_PEG_current_peg.toFixed(2);
+          M_P_N();
+      }
+  </script>
+    </div>
+    <div id="CAGR" class="tab-pane fade"><br>
+    <!--CAGR-->
+      <h3><a href="#" class="list-group-item list-group-item-action"  data-toggle="popover" title="复合年均增长率" data-content="-意思：[复合年均增长率是指一项投资在一特定时期内的年度增长率。]-例子:[ 一只股票从RM 100 升到 RM 121 通过两年, 他的CAGR是10%. 第一年他从100到110涨了10%，第二年他从110到121也涨了10%。]">CAGR</a> </h3>
+      <table class="table table-sm bg-light">
+    <thead class="bg-danger">
+      <tr>
+        <th colspan="6" class="text-center">CAGR</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td colspan="1"></td>
+        <td class="text-center" colspan="2">Year</td>
+        <td class="text-center" colspan="3">Diluted EPS (adj)</td>
+      </tr>
+      <tr>
+        <td colspan="1">开始</td>
+        <td class="text-center" colspan="2"><input type="number" id="CAGR_year_start" onchange="calc_CAGR_value()"></td>
+        <td class="text-center" colspan="3"><input type="number" id="CAGR_diluted_eps_start" onchange="calc_CAGR_value()"></td>
+      </tr>
+      <tr>
+        <td colspan="1">结束</td>
+        <td class="text-center"  colspan="2"><input type="number" id="CAGR_year_end" onchange="calc_CAGR_value()"></td>
+        <td class="text-center" colspan="3"><input type="number" id="CAGR_diluted_eps_end" onchange="calc_CAGR_value()"></td>
+      </tr>
+      <tr>
+        <td colspan="1">年数</td>
+        <td class="text-center" colspan="2" id="CAGR_number_of_year"><p></p></td>
+        <td colspan="3"></td>
+      </tr>
+      <tr>
+        <td colspan="1">CAGR</td>
+        <td colspan="2"></td>
+        <td class="text-center" colspan="3" id="CAGR_cagr"><p></p></td>
+      </tr>
+    </tbody>
+  </table>
+    <script>
+      function calc_CAGR_value(){
+          var v_CAGR_year_start = parseInt(document.getElementById('CAGR_year_start').value);
+          var v_CAGR_year_end = parseInt(document.getElementById('CAGR_year_end').value);
+          var v_CAGR_diluted_eps_start = parseFloat(document.getElementById('CAGR_diluted_eps_start').value);
+          var v_CAGR_diluted_eps_end = parseFloat(document.getElementById('CAGR_diluted_eps_end').value);
+          var s_CAGR_number_of_year = document.getElementById('CAGR_number_of_year');
+          var s_CAGR_cagr = document.getElementById('CAGR_cagr');
+          var v_CAGR_number_of_year = v_CAGR_year_end-v_CAGR_year_start;
+          var v_CAGR_cagr = (((v_CAGR_diluted_eps_end/v_CAGR_diluted_eps_start)**(1/v_CAGR_number_of_year))-1)*100;
+          s_CAGR_number_of_year.innerHTML=v_CAGR_number_of_year;
+          s_CAGR_cagr.innerHTML=v_CAGR_cagr.toFixed(2)+'%';
+          M_P_N();
+      }
+  </script>
+    </div>
+
+  </div>
+      <br>
+    <hr>
+    
+<div class="mt-3">
+   <h3>Other Calculate: <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#accordion"><i class='fas fa-chevron-down'></i></button></h3> 
+  <div id="accordion" class="collapse">
+    <div class="card">
+      <div class="card-header">
+        <a class="card-link" data-toggle="collapse" href="#collapseOne">
+          PE
+        </a>
+      </div>
+      <div id="collapseOne" class="collapse" data-parent="#accordion">
+        <div class="card-body">
+
+        <pre>
+Formula:
+                    Price
+        PE = --------------------------
+                Earnings Per Share
+        pe：{0}x年回本 \n 人们愿意用{0}倍买一块钱 <br>基本面好坏 pe底应该参考市场是否是公司本身还是大市场问题 <br>（基本面和市场因素并未参考）
+      </pre>
+    <label>Price:</label>
+    <br><input type="number" id="pe_price">
+    <br>
+    <label>Eps:</label>
+    <br><input type="number" id="pe_eps">
+    <br>
+    <br>
+    <button type="button" value="Submit" onclick="countPe()">Submit</button>
+    <p id="pe_result"></p>
+    <script>
+      function countPe(){
+        var price = document.getElementById("pe_price").value;
+        var eps = document.getElementById("pe_eps").value;
+        var pe_result = document.getElementById("pe_result");
+        var pe = parseInt(price)/parseInt(eps);
+        pe_result.innerHTML = "PE："+pe.toFixed(2)+"x年回本 <br> 人们愿意用"+pe.toFixed(2)+"倍买一块钱<br>(PE低需参考是市场好坏还是公司本身问题)";
+        M_P_N();
+      }
+    </script>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+        RPE
+      </a>
+      </div>
+      <div id="collapseTwo" class="collapse" data-parent="#accordion">
+        <div class="card-body">
+                  <pre>   
+           Income Statement 可以找PE
+        需要:
+        -需要一样生意模式（3-10年份）
+        -需要稳定和强壮的公司，缓慢增长>15%
+        
+                Highest Pe + Lowest Pe
+        RPE = ----------------------------
+                            2
+        合理价钱/RPE/fair price: RPE
+        
+        </pre>
+    <pre>
+    <strong>-需要一样生意模式（3-10年份）</strong>
+    <strong>-需要稳定和强壮的公司，缓慢增长>15%</strong>
+    </pre>
+    <label>The highest PE:</label>
+    <br><input type="number" id="rpe_h_pe">
+    <br>
+    <label>The lowest PE:</label>
+    <br><input type="number" id="rpe_l_pe">
+    <br>
+    <br>
+    <button type="button" value="Submit" onclick="countRpe()">Submit</button>
+    <p id="rpe_result"></p>
+    <script>
+      function countRpe(){
+        var rpe_h_pe = document.getElementById("rpe_h_pe").value;
+        var rpe_l_pe = document.getElementById("rpe_l_pe").value;
+        var rpe_result = document.getElementById("rpe_result");
+        var rpe_r = (parseInt(rpe_h_pe)+parseInt(rpe_l_pe))/2;
+        rpe_result.innerHTML = "合理价钱/RPE/fair price: " + rpe_r.toFixed(2);
+        M_P_N();
+      }
+    </script>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br><hr>
+<div class="form-group">
+      <label for="comment">Note:</label>
+      <textarea class="form-control" rows="5" id="comment" name="text"></textarea>
+    </div>
+    <br><hr>
+</div>
+     </div>
+         <div id="menu1" class="tab-pane fade"><br>
+      <h3>财务报表</h3>
+
+      <table class="table table-bordered table-sm bg-light">
+    <thead>
+      <tr>
+        <th>Profitability</th>
+        <th>Inflow Cash</th>
+        <th>Efficiency</th>
+        <th>Conservative</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td> <a href="#Revenue" class="list-group-item list-group-item-action"  data-toggle="popover" title="In Income Statement" data-content="-Positive;
+-Increase/Constant;  |[Revenue increases means growing company.]">Revenue</a></td>
+        <td> <a href="#CF_Operation" class="list-group-item list-group-item-action"  data-toggle="popover" title="In Balance Sheet" data-content="-Positive;
+-Increase;  |[Cash from Operations means the amount of cash of a company from carrying out operation like generate revenue,paying expenses and funding working capital over a period of time.]">CF Operation</a></td>
+        <td>
+  <a href="#ROE" class="list-group-item list-group-item-action"  data-toggle="popover" title="In Income Statement" data-content="-Positive
+-Increase;
+->15%;  |[Return On Equity means return on shareholders' equity(身家) and reflect the company generate net profit by net assets.]">Return on Equity(Adj)</a></td>
+        <td><a href="#Total_Debt" class="list-group-item list-group-item-action"  data-toggle="popover" title="In Balance Sheet" data-content="-Normal< 0.5x;
+-Danger>= 0.5x;
+-Bankruptcy> 1.5x  ;|[Total Debt to Equity Ratio means the equity and debt relationship.
+]">Total Debt to Equity</a></td>
+      </tr>
+      <tr>
+        <td>  <a href="#Net_Income" class="list-group-item list-group-item-action" data-toggle="popover" title="In Income Statement" data-content="-Positive;
+-Increase or Constant or Decrease with reason;  |[Net Income(Adj.) means the net profit after taxes and liabities. It should be increases mainly but in range of two years decreases with reason like develop a big project is acceptable.]">Net Income</a></td>
+        <td><a href="#CF_Operation" class="list-group-item list-group-item-action"  data-toggle="popover" title="In Balance Sheet" data-content="-Positive;
+-Increase;  |[Cash from Operations means the amount of cash of a company from carrying out operation like generate revenue,paying expenses and funding working capital over a period of time.]">CF Operation</a></td>
+        <td></td>
+        <td>  <a href="#Net_Debt" class="list-group-item list-group-item-action"  data-toggle="popover" title="In Balance Sheet" data-content="-Negative;
+-Decrease;  |[Net Debt(Cash) to Equity means the company net debt. So the least, the best.]">Net Debt(Cash) to Equity</a></td>
+      </tr>
+      <tr>
+        <td><a href="#Diluted_EPS" class="list-group-item list-group-item-action" data-toggle="popover" title="In Income Statement" data-content="-Positive;
+-Increase;  |[Diluted Earning Per Share means the profit per share after taxes.]">Diluted EPS(Adj)</a></td>
+        <td><a href="#CF_Invest" class="list-group-item list-group-item-action"  data-toggle="popover" title="In Balance Sheet" data-content="-Positive;
+-Increase;  |[Cash flow from investing means the amount of cash of a company from carrying out investing activities include purchases of physical assets, investments in securities, or the sale of securities or assets. Negative is bad and mean poor performance.]">CF Invest</a></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><a href="#CF_Finance" class="list-group-item list-group-item-action"  data-toggle="popover" title="In Balance Sheet" data-content="-Negative;
+-Decrease;  |[Cash flow from financing means the amount of cash of a company from carrying out financing activities include transactions involving debt, equity, and dividends. Negative means clear the debt, give dividend etc and is good.]">CF Finance</a></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>  <a href="#CAPEX" class="list-group-item list-group-item-action"  data-toggle="popover" title="In Balance Sheet" data-content="	-Negative in two year;
+-Profit Increase;  |[CAPEX means the company expand their business. Company can be negative in range of two years but profit after the year should grow. Profit grow means the expand is worth.]">CAPEX</a></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><a href="#FCF" class="list-group-item list-group-item-action"  data-toggle="popover" title="In Balance Sheet" data-content="-Positive;
+-Increase;  |[Free cash flow (FCF) means the cash a company generates after accounting for cash outflows to support operations and maintain its capital assets.]">FCF</a></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+      <br>
+      <div>
+    <br><hr>
+          <div class="row">
+              <div class="col">
+                  <input class="w3-check w3-right" type="checkbox" checked="checked">
+                 </div>
+              <div class="col">
+                  <input class="w3-check w3-right" type="checkbox" checked="checked">
+                  </div>
+              <div class="col">
+                  <input class="w3-check w3-right" type="checkbox" checked="checked">
+              </div>
+              <div class="col">
+                  <input class="w3-check w3-right" type="checkbox" checked="checked">
+                  </div>
+    </div>
+    <br><hr>
+    <input class="w3-check w3-right" type="checkbox" checked="checked">
+    <br><hr>
+    <div class="form-group">
+      <label for="comment">Note:</label>
+      <textarea class="form-control" rows="5" id="comment" name="text"></textarea>
+    </div>
+    <br><hr>
+    </div>
+    </div>
+    <div id="menu2" class="tab-pane fade"><br>
+      <h3>公司衡量</h3>
+  <table class="table table-bordered table-sm">
+    <thead>
+      <tr>
+        <th colspan="2">Business Model</th>
+        <th colspan="2">Management</th>
+        <th colspan="2">Number</th>
+        <th colspan="2">Economic Moat</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td colspan="2"><input class="w3-check w3-center" type="checkbox" checked="checked" ></td>
+        <td colspan="2"><input class="w3-check w3-center" type="checkbox" checked="checked"></td>
+        <td colspan="2"><input class="w3-check w3-center" type="checkbox" checked="checked"></td>
+        <td colspan="2"><input class="w3-check w3-center" type="checkbox" checked="checked"></td>
+      </tr>        
+      <tr>
+        <td><textarea class="form-control" rows="5" id="comment" name="text" placeholder="好"></textarea></td>
+        <td><textarea class="form-control" rows="5" id="comment" name="text" placeholder="坏"></textarea></td>
+        <td><textarea class="form-control" rows="5" id="comment" name="text" placeholder="好"></textarea></td>
+        <td><textarea class="form-control" rows="5" id="comment" name="text" placeholder="坏"></textarea></td>
+        <td><textarea class="form-control" rows="5" id="comment" name="text" placeholder="好"></textarea></td>
+        <td><textarea class="form-control" rows="5" id="comment" name="text" placeholder="坏"></textarea></td>
+        <td><textarea class="form-control" rows="5" id="comment" name="text" placeholder="好"></textarea></td>
+        <td><textarea class="form-control" rows="5" id="comment" name="text" placeholder="坏"></textarea></td>
+      </tr>
+    </tbody>
+  </table>
+<div class="form-group">
+      <label for="comment">Note:</label>
+      <textarea class="form-control" rows="5" id="comment" name="text"></textarea>
+    </div>
+    </div>
+    </div>
+
+<script>
+$(document).ready(function(){
+  $(".nav-tabs a").click(function(){
+    $(this).tab('show');
+  });
+});
+</script>
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  
+</div>
+    <script src="script.js"></script>
+    <script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myDIV *").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+  </body>
+</html>
+
