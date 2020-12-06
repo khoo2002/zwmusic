@@ -27,6 +27,7 @@ urlpatterns = [
     path('index/<dlfile>/<file>',views.download),
     path('index/<imgnfile>',views.picture),
     path('invest',views.invest),
+    path('investcalc',views.investcalc),
     path('dlqrcode',views.dlqrcode),
     path('<filename>',views.stream_http)
     ]
