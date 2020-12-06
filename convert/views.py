@@ -101,10 +101,10 @@ def picture(imgnfile):
     response['content_type'] = 'image/jpg'
     return response
 
-def qrcode(request):
+def invest(request):
     return render(
         request,
-        'qrcode.html',
+        'invest.html',
         {
             'title':'ZWQQ_MUSIC_CONVERTER',
             'form': forms.ZWForm, 
