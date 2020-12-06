@@ -112,6 +112,17 @@ def invest(request):
             
          }
         )
+def investcalc(request):
+    return render(
+        request,
+        'investcalc.html',
+        {
+            'title':'ZWQQ_MUSIC_CONVERTER',
+            'form': forms.ZWForm, 
+            'message':'this is a form',
+            
+         }
+        )
 
 def dlqrcode(request):
     import pyqrcode
