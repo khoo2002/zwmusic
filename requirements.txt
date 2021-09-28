@@ -52,10 +52,8 @@ Pygments==2.4.2
 pyOpenSSL==19.0.0
 PySocks==1.7.0
 python-dateutil==2.8.0
-pytube==9.5.1
 pytz==2019.1
 requests==2.22.0
-six==1.12.0
 soupsieve==1.9.3
 sqlparse==0.3.0
 static3==0.7.0
@@ -71,4 +69,4 @@ whitenoise==4.1.2
 win-inet-pton==1.1.0
 wincertstore==0.2
 you-get==0.4.1314
-youtube-dl==2021.06.06
+youtube_dl==2021.6.6
